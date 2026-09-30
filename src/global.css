@@ -1,0 +1,386 @@
+/* Fonts are served from static/fonts, not from fonts.googleapis.com. The
+   import that used to be here handed Google the IP and the referring room
+   link of every visitor who opened a share link, which is a strange thing for
+   an anonymous messaging app to do on every page load. */
+@import './styles/fonts.css';
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0rem;
+
+  /* Body and headings are separate tokens so a future face swap can take the
+     headings without touching message text. Both resolve to Lexend. */
+  --font-body: 'Lexend', system-ui, sans-serif;
+  --font-heading: 'Lexend', system-ui, sans-serif;
+
+  --color-forest-50: oklch(88.53% 0.00658 197.86);
+  --color-forest-100: oklch(82.734% 0.00774 197.677);
+  --color-forest-200: oklch(74.93% 0.01127 197.334);
+  --color-forest-300: oklch(66.926% 0.01495 197.083);
+  --color-forest-400: oklch(58.502% 0.01655 196.932);
+  --color-forest-500: oklch(49.381% 0.01357 196.95);
+  --color-forest-600: oklch(39.815% 0.01043 197);
+  --color-forest-700: oklch(29.225% 0.00706 197);
+  --color-forest-800: oklch(25.207% 0.00587 197);
+  --color-forest-900: oklch(21.894% 0.00457 197.1);
+  --color-forest-950: oklch(19.694% 0.00468 197);
+
+  --color-sand-50: oklch(97.558% 0.00254 107.115);
+  --color-sand-100: oklch(94.499% 0.00522 106.819);
+  --color-sand-200: oklch(87.799% 0.00945 100.101);
+  --color-sand-300: oklch(80.1% 0.01785 106.882);
+  --color-sand-400: oklch(71.232% 0.02407 101.539);
+  --color-sand-500: oklch(64.807% 0.02771 97.319);
+  --color-sand-600: oklch(60.052% 0.02456 89.876);
+  --color-sand-700: oklch(52.843% 0.02067 89.451);
+  --color-sand-800: oklch(46.462% 0.0165 88.773);
+  --color-sand-900: oklch(40.359% 0.01117 78.151);
+  --color-sand-950: oklch(14.434% 0.00218 106.792);
+
+  /* #region variables */
+  --background: var(--color-sand-50);
+  --foreground: var(--color-sand-800);
+
+  --card: var(--color-sand-100);
+  --card-foreground: var(--color-sand-800);
+
+  --popover: var(--color-sand-100);
+  --popover-foreground: var(--color-sand-800);
+
+  --primary: var(--color-sand-800);
+  --primary-foreground: var(--color-sand-50);
+
+  --secondary: var(--color-forest-50);
+  --secondary-foreground: var(--color-forest-600);
+
+  --muted: var(--color-sand-100);
+  --muted-foreground: var(--color-sand-600);
+
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+
+  --destructive: oklch(48.752% 0.10551 19.391);
+  /* sand-200, not sand-600: a hairline wants to sit just off the surface, and
+     600 was 37 points of lightness below sand-50, which reads as ink. 200 is
+     ~10 below, the same step the dark theme uses in the other direction. */
+  --border: var(--color-sand-200);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.705 0.015 286.067);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.21 0.006 285.885);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.705 0.015 286.067);
+  /* #endregion */
+}
+
+.dark {
+  --background: var(--color-forest-700);
+  --foreground: var(--color-forest-50);
+
+  --card: var(--color-forest-800);
+  --card-foreground: var(--color-forest-50);
+
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+
+  --primary: var(--color-forest-200);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  --muted: var(--color-forest-800);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+
+  /* Negative border. forest-600 is LIGHTER than both dark surfaces
+     (39.8% against a 29.2% ground), so every rule glowed. forest-950 sits
+     ~9.5 below the ground instead, so a border reads as a seam cut into the
+     surface rather than a line drawn on top of it. */
+  --border: var(--color-forest-950);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.552 0.016 285.938);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.552 0.016 285.938);
+}
+
+@theme inline {
+  --text-*: initial;
+  --text-xs: 0.56rem;
+  --text-sm: 0.75rem;
+  --text-base: 1rem;
+  --text-lg: 1.33rem;
+  --text-xl: 1.78rem;
+  --text-2xl: 2.37rem;
+  --text-3xl: 3.16rem;
+  --text-4xl: 4.21rem;
+  --text-5xl: 5.61rem;
+  --text-6xl: 7.48rem;
+  --text-7xl: 9.97rem;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-*: initial;
+  /* var(), not a literal: `inline` substitutes this value into the utility, so
+     font-sans compiles to font-family: var(--font-body) and a theme class can
+     still change it further down the tree. A literal here would bake Lexend
+     into the class where nothing could override it. */
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+/* Message card treatment. Plain CSS rather than Tailwind utilities because
+   the texture is a repeating gradient referenced by class name, and Tailwind
+   only emits classes it can see in source.
+
+   The pattern lives on an offset block BEHIND the card, never on the card
+   itself, so the message always sits on plain surface at full contrast. A
+   texture behind body text lowers contrast at any alpha, which is why the
+   card keeps no background-image of its own.
+
+   The block has to be a sibling of the card rather than a ::before on it:
+   inside a stacking context, negative-z-index children paint after the
+   context element's own background, so a pseudo-element would land on top of
+   the card surface and put the pattern back under the text. */
+:root {
+  /* How far the block sits down and to the right. Down-right is not a
+     preference: the identity chip, the image thumbnail and the hover toolbar
+     all float above the card's top edge, so up-left is already occupied. */
+  --sma-card-offset: 8px;
+  /* Grid pitch. The visible band is only --sma-card-offset wide, so a pitch
+     at or above that shows roughly one line per axis. */
+  --sma-card-grid: 8px;
+  --sma-card-grid-ink: rgba(128, 128, 128, 0.1);
+}
+
+.sma-card-wrap {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.sma-card-block {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translate(var(--sma-card-offset), var(--sma-card-offset));
+  background-color: var(--muted);
+  /* One mid-grey serves both themes: it darkens sand and lightens forest, so
+     there is no theme swap and no second definition to keep in step. */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      var(--sma-card-grid-ink) 0 1px,
+      transparent 1px var(--sma-card-grid)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--sma-card-grid-ink) 0 1px,
+      transparent 1px var(--sma-card-grid)
+    );
+  border: 1px solid var(--foreground);
+}
+
+
+
+/* Portfolio extensions — closely matched to the current robi.work chrome. */
+html { scroll-behavior: smooth; }
+body { min-width: 320px; }
+
+.portfolio-ground {
+  min-height:100vh;
+  background-color:var(--color-forest-700);
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 25v10M25 30h10' stroke='%238a9692' stroke-opacity='.16' stroke-width='1'/%3E%3C/svg%3E");
+  background-size:60px 60px;
+}
+.portfolio-gutter { min-height:100vh; padding:0; }
+.portfolio-column { position:relative; width:100%; max-width:80rem; min-height:100vh; margin:0 auto; border-left:1px solid var(--border); border-right:1px solid var(--border); background:var(--background); }
+
+.portfolio-chrome { position:absolute; z-index:20; top:0; right:0; min-height:3.4rem; display:flex; align-items:center; justify-content:flex-end; padding:0 .65rem; }
+.portfolio-controls { display:flex; align-items:center; gap:.1rem; }
+.chrome-icon { width:2.45rem; height:2.45rem; display:grid; place-items:center; border:0; color:var(--foreground); background:transparent; cursor:pointer; opacity:.9; transition:background-color .16s ease, opacity .16s ease; }
+.chrome-icon:hover { background:var(--muted); opacity:1; }
+.shortcut-popover { position:absolute; z-index:30; top:3.65rem; right:1rem; width:15rem; border:1px solid var(--border); background:var(--card); padding:.7rem; box-shadow:4px 4px 0 var(--color-forest-950); }
+.shortcut-heading { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); padding:.15rem .1rem .55rem; color:var(--foreground); font-size:.68rem; }
+.shortcut-heading button { border:0; background:transparent; color:var(--foreground); cursor:pointer; }
+.shortcut-row { display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.55rem .1rem; color:var(--muted-foreground); font-size:.62rem; }
+.shortcut-row kbd { border:1px solid var(--border); padding:.2rem .35rem; color:var(--foreground); background:var(--background); font:inherit; }
+
+.profile-block { padding:5.2rem 2.5rem 3.6rem; border-bottom:1px solid var(--border); }
+.profile-identity { display:flex; align-items:center; gap:1.35rem; }
+.profile-avatar { width:8.9rem; height:8.9rem; flex:0 0 auto; border:1px solid var(--foreground); display:grid; place-items:center; background:var(--muted); color:var(--foreground); font-size:2.15rem; font-weight:300; letter-spacing:-.05em; }
+.profile-copy h1 { margin:0; font-size:2.35rem; line-height:1; font-weight:300; letter-spacing:-.045em; }
+.profile-links { display:flex; flex-wrap:wrap; gap:1.05rem; margin-top:1rem; }
+.profile-links a,.project-actions a { display:inline-flex; align-items:center; gap:.4rem; color:var(--muted-foreground); text-decoration:none; font-size:.78rem; font-weight:300; transition:color .16s ease; }
+.profile-links a:hover,.project-actions a:hover { color:var(--foreground); }
+.profile-intro { margin-top:1.55rem; max-width:68rem; }
+.profile-intro p { margin:0; color:var(--muted-foreground); font-size:1rem; line-height:2.05; font-weight:300; }
+.profile-intro .profile-subline { margin-top:.95rem; font-size:.86rem; line-height:1.7; }
+.inline-tag { display:inline-block; margin:0 .16rem .22rem; padding:.1rem .42rem; border:1px solid transparent; background:var(--muted); color:var(--foreground); line-height:1.35; }
+.profile-actions,.contact-action-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.35rem; }
+.primary-action,.secondary-action { display:inline-flex; align-items:center; justify-content:center; gap:.55rem; min-height:2.55rem; padding:.6rem 1rem; border:1px solid var(--border); text-decoration:none; font-size:.77rem; font-weight:300; transition:background-color .16s ease,color .16s ease; }
+.primary-action { background:var(--primary); color:var(--primary-foreground); border-color:var(--primary); }
+.primary-action:hover { background:var(--foreground); color:var(--background); }
+.secondary-action { background:var(--muted); color:var(--foreground); }
+.secondary-action:hover { background:var(--card); }
+.quote-icon { font-size:.62rem; opacity:.7; }
+
+.rob-section { padding:3rem 2.5rem; border-bottom:1px solid var(--border); }
+.section-heading-row { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; border-bottom:1px solid var(--border); padding-bottom:.6rem; margin-bottom:1.5rem; }
+.section-heading-row h2 { margin:0; font-size:1.45rem; line-height:1.1; font-weight:300; letter-spacing:-.03em; }
+.section-heading-row span { color:var(--muted-foreground); font-size:.54rem; font-weight:300; letter-spacing:.14em; text-transform:uppercase; }
+.about-grid { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(15rem,.7fr); gap:2rem; }
+.about-copy p { margin:0 0 1rem; color:var(--muted-foreground); font-size:.86rem; line-height:1.9; font-weight:300; }
+.about-facts { border-left:1px solid var(--border); }
+.about-facts div { padding:.8rem 0 .8rem 1rem; border-bottom:1px solid var(--border); }
+.about-facts div:first-child { border-top:1px solid var(--border); }
+.about-facts span,.compact-item span,.education-row span { display:block; color:var(--muted-foreground); font-size:.54rem; letter-spacing:.12em; text-transform:uppercase; }
+.about-facts strong { display:block; margin-top:.3rem; font-size:.76rem; font-weight:300; }
+
+.projects-section { padding:3rem 2.5rem; border-bottom:1px solid var(--border); }
+.projects-heading { margin-bottom:1.15rem; }
+.project-showcase { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(17rem,.8fr); border-bottom:1px solid var(--border); padding:1.35rem 0; gap:2rem; }
+.project-showcase:first-of-type { padding-top:0; }
+.project-visual { min-height:23rem; border:1px solid var(--border); background:var(--card); padding:1rem; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; }
+.project-visual::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(128,128,128,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(128,128,128,.055) 1px,transparent 1px); background-size:24px 24px; pointer-events:none; }
+.visual-topline,.visual-footer,.visual-system,.visual-title { position:relative; z-index:1; }
+.visual-topline,.visual-footer { display:flex; justify-content:space-between; gap:.5rem; flex-wrap:wrap; color:var(--muted-foreground); font-size:.54rem; text-transform:uppercase; letter-spacing:.1em; }
+.visual-topline span:first-child { display:flex; align-items:center; gap:.4rem; }
+.visual-title { margin-top:auto; margin-bottom:1.5rem; max-width:80%; font-size:2rem; line-height:1.05; font-weight:300; letter-spacing:-.04em; }
+.visual-system { display:flex; align-items:center; justify-content:center; gap:.55rem; margin:2rem 0; }
+.system-node { border:1px solid var(--border); padding:.6rem .75rem; background:var(--background); font-size:.54rem; letter-spacing:.12em; }
+.system-node.accent { background:var(--primary); color:var(--primary-foreground); border-color:var(--primary); }
+.system-line { width:clamp(1.2rem,6vw,4rem); height:1px; background:var(--foreground); opacity:.4; }
+.visual-footer { justify-content:flex-start; }
+.visual-footer span { border:1px solid var(--border); padding:.28rem .45rem; background:var(--background); }
+.project-info { display:flex; flex-direction:column; justify-content:space-between; min-width:0; padding:.15rem 0; }
+.project-title-row { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; }
+.project-title-row h3 { margin:0; font-size:1.55rem; line-height:1.1; font-weight:300; letter-spacing:-.03em; }
+.project-number { color:var(--muted-foreground); font-size:.54rem; letter-spacing:.1em; }
+.project-description { margin:.9rem 0 0; color:var(--muted-foreground); font-size:.8rem; line-height:1.8; font-weight:300; }
+.project-tags,.tag-cloud { display:flex; flex-wrap:wrap; gap:.35rem; }
+.project-tags { margin-top:1.05rem; }
+.project-tags span,.tag-cloud span { border:1px solid var(--border); background:var(--muted); padding:.27rem .43rem; color:var(--muted-foreground); font-size:.54rem; line-height:1.2; }
+.tag-cloud { gap:.42rem; }
+.tag-cloud span { padding:.4rem .58rem; color:var(--foreground); }
+.project-actions { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; border-top:1px solid var(--border); margin-top:1.5rem; padding-top:.78rem; }
+.project-actions button { display:inline-flex; align-items:center; gap:.4rem; padding:0; border:0; background:none; color:var(--foreground); cursor:pointer; font:inherit; font-size:.75rem; font-weight:300; }
+.project-actions button:hover { color:var(--muted-foreground); }
+
+.two-column-list { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+.compact-item { display:grid; grid-template-columns:2.15rem 1fr; gap:.8rem; padding:1rem 0; border-bottom:1px solid var(--border); }
+.compact-icon { width:2.1rem; height:2.1rem; border:1px solid var(--border); display:grid; place-items:center; background:var(--muted); }
+.compact-item h3 { margin:.3rem 0 .15rem; font-size:.8rem; line-height:1.35; font-weight:300; }
+.compact-item p { margin:0; color:var(--muted-foreground); font-size:.68rem; line-height:1.5; font-weight:300; }
+.education-row { display:grid; grid-template-columns:2.1rem 1fr auto; align-items:center; gap:1rem; }
+.education-row h3 { margin:.25rem 0 .1rem; font-size:.98rem; font-weight:300; }
+.education-row p { margin:0; color:var(--muted-foreground); font-size:.7rem; font-weight:300; }
+.education-stats { display:flex; gap:.5rem; }
+.education-stats span { border:1px solid var(--border); padding:.52rem .68rem; text-transform:none; letter-spacing:0; }
+.education-stats strong { display:block; color:var(--foreground); margin-top:.2rem; font-size:.82rem; font-weight:300; }
+
+.contact-block { display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; padding:4rem 2.5rem; border-bottom:1px solid var(--border); }
+.contact-kicker { color:var(--muted-foreground); font-size:.54rem; letter-spacing:.16em; }
+.contact-block h2 { margin:.65rem 0 0; max-width:42rem; font-size:1.95rem; line-height:1.05; font-weight:300; letter-spacing:-.04em; }
+.contact-block p { max-width:38rem; margin:.9rem 0 0; color:var(--muted-foreground); font-size:.8rem; line-height:1.7; font-weight:300; }
+.contact-action-row { margin-top:0; justify-content:flex-end; }
+.portfolio-footer { display:flex; justify-content:space-between; gap:1rem; padding:1rem 2.5rem; color:var(--muted-foreground); font-size:.6rem; font-weight:300; }
+
+@media (max-width:800px) {
+  .profile-block,.rob-section,.projects-section,.contact-block { padding-inline:1.25rem; }
+  .profile-avatar { width:6rem; height:6rem; font-size:1.5rem; }
+  .profile-copy h1 { font-size:1.7rem; }
+  .profile-intro p { font-size:.86rem; line-height:1.8; }
+  .project-showcase,.about-grid,.two-column-list { grid-template-columns:1fr; }
+  .project-visual { min-height:17rem; }
+  .education-row { grid-template-columns:2.1rem 1fr; }
+  .education-stats { grid-column:2; }
+  .contact-block { flex-direction:column; align-items:flex-start; }
+  .contact-action-row { justify-content:flex-start; }
+}
+@media (max-width:520px) {
+  .profile-block { padding-top:4.5rem; padding-bottom:2.4rem; }
+  .profile-identity { align-items:flex-start; }
+  .profile-avatar { width:4.5rem; height:4.5rem; font-size:1.15rem; }
+  .profile-copy h1 { font-size:1.35rem; }
+  .profile-links { gap:.65rem; }
+  .profile-links a { font-size:.68rem; }
+  .project-title-row h3 { font-size:1.3rem; }
+  .visual-title { font-size:1.55rem; }
+  .visual-system { gap:.3rem; }
+  .system-node { padding:.45rem; }
+  .contact-block h2 { font-size:1.6rem; }
+  .portfolio-footer { flex-direction:column; padding-inline:1.25rem; }
+}

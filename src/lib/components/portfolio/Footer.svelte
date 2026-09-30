@@ -1,0 +1,2 @@
+<script lang="ts">import { personalInfo } from '$lib/portfolio/data'; const year=new Date().getFullYear();</script>
+<footer class="border-border border-t px-4 py-3 text-center"><span class="text-sm font-extralight">{personalInfo.name}</span><span class="mx-2 text-muted-foreground">·</span><span class="text-xs font-extralight text-muted-foreground">AI / ML / LLM / RAG</span><span class="mx-2 text-muted-foreground">·</span><span class="text-xs font-extralight text-muted-foreground">© {year}</span></footer>

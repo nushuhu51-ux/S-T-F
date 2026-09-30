@@ -1,0 +1,5 @@
+Place your CV PDF here as:
+  static/samuel-teshale-cv.pdf
+
+This file is linked from the Hero section's "Download CV" button.
+The Hero component references: /samuel-teshale-cv.pdf
